@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080d12">
+  <title>神经星环 · Agent 作战大屏</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#mission-input">跳到任务输入</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="神经星环首页"><span class="brand-mark" aria-hidden="true">✳</span><span><strong>神经星环</strong><small>NEURAL STAR RING</small></span></a>
+      <div class="deck-label"><span>COMMAND DECK</span><i></i><span>多智能体协同作战大屏</span></div>
+      <div class="header-actions"><span class="connection" id="connection"><i></i>本地在线</span><button id="integration-open" class="quiet-button"><span aria-hidden="true">⌁</span> 接入 Agent</button><button id="fullscreen" class="icon-button" title="切换全屏" aria-label="切换全屏">⛶</button></div>
+    </header>
+
+    <div class="workspace-heading"><div class="workspace-title"><span class="mini-cross">+</span><span>协同态势</span><span class="slash">/</span><span class="muted mono">WORKSPACE 01</span></div><div class="mode-tag" id="mode-tag"><span class="status-dot"></span>演示模式 <span>· 未连接模型</span></div><time id="clock" class="mono"></time></div>
+
+    <main class="command-layout">
+      <aside class="agent-rail" aria-label="Agent 席位">
+        <div class="section-heading"><h2>智能体席位 <span class="mono">/ 08</span></h2><span class="tiny-label">AGENT FLEET</span></div>
+        <div id="agent-list" class="agent-list"></div>
+        <div class="rail-note"><span class="small-cross">+</span><div>各司其职，同步进化<small>选择席位，查看协作详情</small></div></div>
+      </aside>
+
+      <section class="constellation" aria-labelledby="ring-title">
+        <div class="stage-top"><div><span class="eyebrow">NEURAL NETWORK</span><h1 id="ring-title">让每一束思考，彼此连接。</h1></div><span class="stage-index mono">NSR—001</span></div>
+        <div class="ring-stage" id="ring-stage"><canvas id="ring" aria-label="八个 Agent 席位组成的动态神经星环；可用下方按钮切换视角">星环可视化需要 Canvas 支持，席位数据仍可在两侧查看。</canvas><div class="ring-core-label"><span class="core-status" id="core-status">协作进行中</span><strong id="core-count">03</strong><small>ACTIVE AGENTS</small></div><div class="ring-coordinate coord-left mono">θ <span id="angle-value">008.0</span>°<br>φ <span id="tilt-value">015.5</span>°</div><div class="ring-coordinate coord-right mono">SYNC<br><span id="sync-label">DEMO STREAM</span></div><div class="orbit-caption"><i></i><span id="orbit-caption">八个席位 · 一个协作网络</span></div></div>
+        <div class="stage-controls"><div class="segmented" aria-label="星环视角"><button class="active" data-view="orbit" aria-pressed="true">轨道视角</button><button data-view="top" aria-pressed="false">俯视</button><button data-view="side" aria-pressed="false">侧视</button></div><div class="stage-tools"><button class="icon-button" id="zoom-out" title="缩小" aria-label="缩小星环">−</button><span id="zoom-value" class="mono">100%</span><button class="icon-button" id="zoom-in" title="放大" aria-label="放大星环">+</button><span class="tool-divider"></span><button id="motion-toggle" class="icon-button" title="暂停视觉动效" aria-label="暂停视觉动效">Ⅱ</button></div></div>
+        <div class="network-legend"><span><i class="legend-node"></i>席位节点</span><span><i class="legend-line"></i>协作连接</span><span><i class="legend-pulse"></i>事件脉冲</span><span class="mono">DRAG TO ORBIT</span></div>
+      </section>
+
+      <aside class="telemetry-rail" aria-label="任务与事件">
+        <section class="mission-panel"><div class="section-heading"><h2>当前任务</h2><span class="mission-code mono">MISSION / 001</span></div><div class="mission-state"><span class="status-dot"></span><span id="mission-state">执行中</span><span class="mono" id="elapsed">00:19</span></div><h3 id="mission-title">构建下一代 Agent 控制中心</h3><div class="mission-progress"><span>整体进度</span><strong id="mission-percent" class="mono">0%</strong></div><div class="progress-track"><i id="mission-progress-bar"></i></div><div class="mission-summary"><span id="completed-label">0 / 8 席位完成</span><span id="scenario-label">产品研发演示</span></div><div id="task-phases" class="task-phases"></div><div class="playback"><button id="pause-demo" class="quiet-button">Ⅱ 暂停演示</button><select id="speed" aria-label="演示速度"><option value="0.5">0.5× 速度</option><option value="1" selected>1× 速度</option><option value="2">2× 速度</option></select></div></section>
+        <section class="signal-panel"><div class="section-heading"><h2>信号流 <span id="event-count" class="mono">00</span></h2><span class="tiny-label">SIGNAL FEED</span></div><div class="feed-filter"><label for="event-filter" class="sr-only">筛选事件</label><select id="event-filter"><option value="all">全部事件</option><option value="handoff">协作交接</option><option value="completed">完成事件</option><option value="error">异常事件</option></select><span class="mono" id="feed-origin">DEMO</span></div><div id="event-list" class="event-list" aria-live="off"></div></section>
+      </aside>
+    </main>
+
+    <section class="command-composer" aria-label="启动演示任务"><div class="composer-symbol" aria-hidden="true">↗</div><div class="composer-label"><strong>发起一次协作</strong><span id="composer-note">从一个目标，到八个席位的共同响应</span></div><form id="mission-form"><label for="mission-input" class="sr-only">演示任务目标</label><input id="mission-input" maxlength="100" placeholder="输入一个目标，启动多 Agent 协作演示…" required autocomplete="off"><label for="scenario" class="sr-only">演示场景</label><select id="scenario"><option value="build">产品研发</option><option value="research">研究简报</option><option value="incident">故障排查</option></select><button type="submit" class="primary-button" id="launch-button">启动演示 <span aria-hidden="true">↗</span></button></form></section>
+
+    <footer class="metrics-strip"><div class="metric"><span>席位状态 <small>ACTIVE / TOTAL</small></span><strong><b id="metric-active">03</b><em>/ 08</em></strong></div><div class="metric"><span>协作交接 <small>HANDOFFS</small></span><strong id="metric-handoffs">0</strong><svg class="sparkline" viewBox="0 0 105 30" aria-hidden="true"><polyline points="0,24 8,23 14,16 20,23 26,9 31,22 38,20 44,5 49,18 56,11 62,24 70,13 76,17 83,3 90,15 97,10 105,8"/></svg></div><div class="metric"><span id="tokens-label">模拟 Token <small>DEMO TOKENS</small></span><strong id="metric-tokens">0</strong></div><div class="metric"><span>任务完成 <small>COMPLETED SEATS</small></span><strong><b id="metric-done">00</b><em>/ 08</em></strong></div><div class="footer-note"><span><i></i>LOCAL FIRST · 独立原创 MVP</span><button id="export-button">导出状态快照 ↓</button></div></footer>
+    <div class="bottom-line"><span class="mono">NEURAL STAR RING · LOCAL EDITION / 2026</span><span>灵感来自「神经星环」视频 · 非作者原版 · 演示不调用模型</span><span class="mono">SYSTEM NOMINAL <i></i></span></div>
+  </div>
+
+  <dialog id="agent-dialog" class="detail-dialog"><div class="dialog-header"><span class="eyebrow">AGENT INSPECTOR</span><button class="icon-button" data-close="agent-dialog" aria-label="关闭席位详情">×</button></div><div id="agent-detail"></div><button class="quiet-button full-width" data-close="agent-dialog">返回作战大屏</button></dialog>
+  <dialog id="integration-dialog" class="integration-dialog"><div class="dialog-header"><span class="eyebrow">LOCAL EVENT BRIDGE</span><button class="icon-button" data-close="integration-dialog" aria-label="关闭接入说明">×</button></div><h2>让真实事件，点亮星环。</h2><p>为你的 Agent 增加一个事件适配器，将工作状态送到本机大屏。这里接收事件，不执行任务、不调用模型。</p><ol class="integration-steps"><li>切换到外部模式，演示数据将清空。</li><li>在 Agent 的开始、进度、完成回调中发送事件。</li><li>页面自动读回；20 秒未更新的工作席位标记为失联。</li></ol><pre id="curl-example"></pre><p class="integration-hint">示例只验证事件传输，不代表接入真实模型。席位 ID：PILOT / SCOUT / CODEX / FORGE / SENTINEL / SCRIBE / RELAY / ARCHIVE。</p><div class="integration-actions"><button id="live-mode" class="primary-button">切换外部模式 ↗</button><button id="demo-mode" class="quiet-button">返回演示模式</button></div><div id="integration-status" class="integration-status" role="status"></div></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
